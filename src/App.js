@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { Container } from "@material-ui/core";
+import Navbar from "./components/Navbar/Navbar";
+import Home from "./components/Home/Home";
+import Auth from "./components/Auth/Auth";
+import PostDetails from "./components/PostDetails/PostDetails";
 
-function App() {
+const App = () => {
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Container maxWidth="xl">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Navigate to="/posts" replace />} />
+          <Route path="/posts" element={<Home />} />
+          <Route path="/posts/search" element={<Home />} />
+          <Route path="/posts/:id" element={<PostDetails />} />
+          <Route
+            path="/auth"
+            element={!user ? <Auth /> : <Navigate to="/posts" />}
+          />
+        </Routes>
+      </Container>
+    </Router>
   );
 }
 
