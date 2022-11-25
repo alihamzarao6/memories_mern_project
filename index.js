@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 });
 
 mongoose
-  .connect(process.env.CONNECTION_URL, { useNewUrlParser: true })
+  .connect(process.env.LOCAL_DB_URL, { useNewUrlParser: true })
   .then(() =>
     app.listen(PORT, () => {
       console.log(`server is running on port no. ${PORT}`);
